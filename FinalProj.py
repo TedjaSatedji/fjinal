@@ -35,7 +35,7 @@ budget = st.number_input("💰 Enter your budget ($):", min_value=100, max_value
 
 # User input: Preferred brands
 vendor = df["vendor"].dropna().unique().tolist()
-preferred_brands = st.multiselect("🏷️ Preferred Brands (optional):", options=vendor, default=[])
+preferred_brands = st.multiselect("🏷️ Preferred Brands (optional):", options=vendor, default=vendor)
 
 # User input: Weights (auto-normalized)
 st.subheader("⚖️ Set Importance (0–100) — Weights are normalized automatically")
