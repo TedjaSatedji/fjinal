@@ -104,6 +104,7 @@ else:
         st.subheader("🏆 Top 5 GPU Matches")
         for idx, gpu in top_gpus.iterrows():
             st.markdown(f"### {idx+1}. {gpu['model']} ({gpu['brand']})")
+            st.markdown(f"- **SAW Score**: {gpu['SAW Score']:.4f}")
             st.markdown(f"- **Memory**: {gpu['memory']} GB")
             st.markdown(f"- **Clock Speed**: {gpu['clock_speed']} MHz")
             st.markdown(f"- **Length**: {gpu['length']} mm")
@@ -112,12 +113,12 @@ else:
             st.markdown("---")
             
              # Button for Gemini AI recommendation
-            if st.button(f"🤖 Gemini AI: Recommend PC Build for {gpu['model']}", key=f"gemini_{idx}"):
+            if st.button(f"{gpu['model']} PC Build Reccomendation Powered by Gemini AI✨", key=f"gemini_{idx}"):
                 with st.spinner("Contacting Gemini AI..."):
                     def call_gemini_api(gpu_info):
                         prompt = (
                             f"Suggest a balanced PC build including CPU, RAM, motherboard, PSU, case, and storage "
-                            f"to pair with the following GPU for gaming and productivity under.\n\n"
+                            f"to pair with the following GPU for gaming and productivity, maintain balance.\n\n"
                             f"GPU details:\n"
                             f"- Model: {gpu_info['model']}\n"
                             f"- Brand: {gpu_info['brand']}\n"
