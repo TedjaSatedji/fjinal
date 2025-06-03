@@ -12,6 +12,21 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 SERPAPI_KEY = "acb3e19e26048b6128052b60fafaceb45978d8bd8a6ef6e2294187596e43c87a"
 
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+            url("https://r4.wallpaperflare.com/wallpaper/58/397/197/nvidia-gpus-technology-pc-gaming-wallpaper-f93682b61b3a6fea60bb226aa8078573.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 @st.cache_data
 def load_data():
     data = pd.read_csv("gpu_with_vendors.csv", encoding="utf-8", on_bad_lines="skip")
@@ -59,7 +74,7 @@ def get_gpu_image_url(query):
 # Load the cleaned data
 df = load_data()
 
-st.title("🎯 GPU Recommender (SAW Model)")
+st.title("🤔 GPU Recommender (SAW Model)")
 st.markdown("Find the best GPU based on your budget and preferences using the Simple Additive Weighting method.")
 
 # User input: Budget
