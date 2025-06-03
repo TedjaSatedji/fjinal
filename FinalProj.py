@@ -10,7 +10,7 @@ GEMINI_API_KEY = "AIzaSyCBGjgvI6yfK-zTH8QjLd4x1Yzrg-Qhc7Q"
 
 genai.configure(api_key=GEMINI_API_KEY)
 
-SERPAPI_KEY = "acb3e19e26048b6128052b60fafaceb45978d8bd8a6ef6e2294187596e43c87a"
+SERPAPI_KEY = "d3c7eccccf78af74e7fb50878650049bc17e1e15eacce3d8a41040c71a080b91"
 
 st.markdown(
     """
@@ -49,7 +49,7 @@ def load_data():
         data["length"] = data["length"].astype(str).apply(lambda x: re.sub(r"[^\d.]", "", x))
         data["length"] = pd.to_numeric(data["length"], errors="coerce")
     else:
-        data["length"] = np.nan  # fallback if column missing
+        data["length"] = np.nan  # fallback if column missing   
 
     # Drop incomplete rows
     data = data.dropna(subset=["price", "clock_speed", "memory", "length"])
