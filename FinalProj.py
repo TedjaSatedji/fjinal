@@ -2,13 +2,15 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import re
+import requests
 
 import google.generativeai as genai
 
 GEMINI_API_KEY = "AIzaSyCBGjgvI6yfK-zTH8QjLd4x1Yzrg-Qhc7Q"
+
 genai.configure(api_key=GEMINI_API_KEY)
 
-
+SERPAPI_KEY = "acb3e19e26048b6128052b60fafaceb45978d8bd8a6ef6e2294187596e43c87a"
 
 @st.cache_data
 def load_data():
@@ -37,6 +39,22 @@ def load_data():
     # Drop incomplete rows
     data = data.dropna(subset=["price", "clock_speed", "memory", "length"])
     return data
+
+def get_gpu_image_url(query):
+    try:
+        params = {
+            "q": query,
+            "tbm": "isch",
+            "ijn": "0",
+            "api_key": SERPAPI_KEY,
+        }
+        response = requests.get("https://serpapi.com/search", params=params)
+        results = response.json()
+        if "images_results" in results and len(results["images_results"]) > 0:
+            return results["images_results"][0]["thumbnail"]
+    except Exception as e:
+        st.warning(f"Image scraping failed: {e}")
+    return None
 
 # Load the cleaned data
 df = load_data()
@@ -104,6 +122,12 @@ else:
         st.subheader("🏆 Top 5 GPU Matches")
         for idx, gpu in top_gpus.iterrows():
             st.markdown(f"### {idx+1}. {gpu['model']} ({gpu['brand']})")
+            image_url = get_gpu_image_url(f"{gpu['brand']} {gpu['model']} GPU")
+            if image_url:
+                st.image(image_url, width=300, caption=f"{gpu['brand']} {gpu['model']}")
+            else:
+                st.info("No image found.")
+
             st.markdown(f"- **SAW Score**: {gpu['SAW Score']:.4f}")
             st.markdown(f"- **Memory**: {gpu['memory']} GB")
             st.markdown(f"- **Clock Speed**: {gpu['clock_speed']} MHz")
